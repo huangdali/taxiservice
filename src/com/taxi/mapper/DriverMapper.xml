@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taxi.mapper.DriverMapper" >
+  <resultMap id="BaseResultMap" type="com.taxi.model.po.Driver" >
+    <id column="d_id" property="dId" jdbcType="INTEGER" />
+    <result column="d_name" property="dName" jdbcType="VARCHAR" />
+    <result column="d_pwd" property="dPwd" jdbcType="CHAR" />
+    <result column="d_sex" property="dSex" jdbcType="BIT" />
+    <result column="d_birthday" property="dBirthday" jdbcType="CHAR" />
+    <result column="d_phone" property="dPhone" jdbcType="CHAR" />
+    <result column="d_license_validity" property="dLicenseValidity" jdbcType="CHAR" />
+    <result column="d_is_tranin" property="dIsTranin" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.taxi.model.po.Driver" extends="BaseResultMap" >
+    <result column="d_address" property="dAddress" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    d_id, d_name, d_pwd, d_sex, d_birthday, d_phone, d_license_validity, d_is_tranin
+  </sql>
+  <sql id="Blob_Column_List" >
+    d_address
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from driver
+    where d_id = #{dId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from driver
+    where d_id = #{dId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.taxi.model.po.Driver" >
+    insert into driver (d_id, d_name, d_pwd, 
+      d_sex, d_birthday, d_phone, d_license_validity, 
+      d_is_tranin, d_address)
+    values (#{dId,jdbcType=INTEGER}, #{dName,jdbcType=VARCHAR}, #{dPwd,jdbcType=CHAR}, 
+      #{dSex,jdbcType=BIT}, #{dBirthday,jdbcType=CHAR}, #{dPhone,jdbcType=CHAR}, #{dLicenseValidity,jdbcType=CHAR}, 
+      #{dIsTranin,jdbcType=BIT}, #{dAddress,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taxi.model.po.Driver" >
+    insert into driver
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        d_id,
+      </if>
+      <if test="dName != null" >
+        d_name,
+      </if>
+      <if test="dPwd != null" >
+        d_pwd,
+      </if>
+      <if test="dSex != null" >
+        d_sex,
+      </if>
+      <if test="dBirthday != null" >
+        d_birthday,
+      </if>
+      <if test="dPhone != null" >
+        d_phone,
+      </if>
+      <if test="dLicenseValidity != null" >
+        d_license_validity,
+      </if>
+      <if test="dIsTranin != null" >
+        d_is_tranin,
+      </if>
+      <if test="dAddress != null" >
+        d_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="dName != null" >
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dPwd != null" >
+        #{dPwd,jdbcType=CHAR},
+      </if>
+      <if test="dSex != null" >
+        #{dSex,jdbcType=BIT},
+      </if>
+      <if test="dBirthday != null" >
+        #{dBirthday,jdbcType=CHAR},
+      </if>
+      <if test="dPhone != null" >
+        #{dPhone,jdbcType=CHAR},
+      </if>
+      <if test="dLicenseValidity != null" >
+        #{dLicenseValidity,jdbcType=CHAR},
+      </if>
+      <if test="dIsTranin != null" >
+        #{dIsTranin,jdbcType=BIT},
+      </if>
+      <if test="dAddress != null" >
+        #{dAddress,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taxi.model.po.Driver" >
+    update driver
+    <set >
+      <if test="dName != null" >
+        d_name = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dPwd != null" >
+        d_pwd = #{dPwd,jdbcType=CHAR},
+      </if>
+      <if test="dSex != null" >
+        d_sex = #{dSex,jdbcType=BIT},
+      </if>
+      <if test="dBirthday != null" >
+        d_birthday = #{dBirthday,jdbcType=CHAR},
+      </if>
+      <if test="dPhone != null" >
+        d_phone = #{dPhone,jdbcType=CHAR},
+      </if>
+      <if test="dLicenseValidity != null" >
+        d_license_validity = #{dLicenseValidity,jdbcType=CHAR},
+      </if>
+      <if test="dIsTranin != null" >
+        d_is_tranin = #{dIsTranin,jdbcType=BIT},
+      </if>
+      <if test="dAddress != null" >
+        d_address = #{dAddress,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.taxi.model.po.Driver" >
+    update driver
+    set d_name = #{dName,jdbcType=VARCHAR},
+      d_pwd = #{dPwd,jdbcType=CHAR},
+      d_sex = #{dSex,jdbcType=BIT},
+      d_birthday = #{dBirthday,jdbcType=CHAR},
+      d_phone = #{dPhone,jdbcType=CHAR},
+      d_license_validity = #{dLicenseValidity,jdbcType=CHAR},
+      d_is_tranin = #{dIsTranin,jdbcType=BIT},
+      d_address = #{dAddress,jdbcType=LONGVARCHAR}
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taxi.model.po.Driver" >
+    update driver
+    set d_name = #{dName,jdbcType=VARCHAR},
+      d_pwd = #{dPwd,jdbcType=CHAR},
+      d_sex = #{dSex,jdbcType=BIT},
+      d_birthday = #{dBirthday,jdbcType=CHAR},
+      d_phone = #{dPhone,jdbcType=CHAR},
+      d_license_validity = #{dLicenseValidity,jdbcType=CHAR},
+      d_is_tranin = #{dIsTranin,jdbcType=BIT}
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+</mapper>

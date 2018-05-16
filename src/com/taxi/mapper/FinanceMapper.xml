@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taxi.mapper.FinanceMapper" >
+  <resultMap id="BaseResultMap" type="com.taxi.model.po.Finance" >
+    <id column="f_id" property="fId" jdbcType="INTEGER" />
+    <result column="f_price" property="fPrice" jdbcType="INTEGER" />
+    <result column="f_time" property="fTime" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.taxi.model.po.FinanceWithBLOBs" extends="BaseResultMap" >
+    <result column="f_content" property="fContent" jdbcType="LONGVARCHAR" />
+    <result column="f_type" property="fType" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    f_id, f_price, f_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    f_content, f_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from finance
+    where f_id = #{fId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from finance
+    where f_id = #{fId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.taxi.model.po.FinanceWithBLOBs" >
+    insert into finance (f_id, f_price, f_time, 
+      f_content, f_type)
+    values (#{fId,jdbcType=INTEGER}, #{fPrice,jdbcType=INTEGER}, #{fTime,jdbcType=CHAR}, 
+      #{fContent,jdbcType=LONGVARCHAR}, #{fType,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taxi.model.po.FinanceWithBLOBs" >
+    insert into finance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        f_id,
+      </if>
+      <if test="fPrice != null" >
+        f_price,
+      </if>
+      <if test="fTime != null" >
+        f_time,
+      </if>
+      <if test="fContent != null" >
+        f_content,
+      </if>
+      <if test="fType != null" >
+        f_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=INTEGER},
+      </if>
+      <if test="fPrice != null" >
+        #{fPrice,jdbcType=INTEGER},
+      </if>
+      <if test="fTime != null" >
+        #{fTime,jdbcType=CHAR},
+      </if>
+      <if test="fContent != null" >
+        #{fContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fType != null" >
+        #{fType,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taxi.model.po.FinanceWithBLOBs" >
+    update finance
+    <set >
+      <if test="fPrice != null" >
+        f_price = #{fPrice,jdbcType=INTEGER},
+      </if>
+      <if test="fTime != null" >
+        f_time = #{fTime,jdbcType=CHAR},
+      </if>
+      <if test="fContent != null" >
+        f_content = #{fContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fType != null" >
+        f_type = #{fType,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.taxi.model.po.FinanceWithBLOBs" >
+    update finance
+    set f_price = #{fPrice,jdbcType=INTEGER},
+      f_time = #{fTime,jdbcType=CHAR},
+      f_content = #{fContent,jdbcType=LONGVARCHAR},
+      f_type = #{fType,jdbcType=LONGVARCHAR}
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taxi.model.po.Finance" >
+    update finance
+    set f_price = #{fPrice,jdbcType=INTEGER},
+      f_time = #{fTime,jdbcType=CHAR}
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+</mapper>

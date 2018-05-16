@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taxi.mapper.AdminMapper">
+    <resultMap id="BaseResultMap" type="com.taxi.model.po.Admin">
+        <id column="a_id" property="aId" jdbcType="INTEGER"/>
+        <result column="a_acount" property="aAcount" jdbcType="VARCHAR"/>
+        <result column="a_pwd" property="aPwd" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    a_id, a_acount, a_pwd
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+        where a_id = #{aId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin
+    where a_id = #{aId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.taxi.model.po.Admin">
+    insert into admin (a_id, a_acount, a_pwd
+      )
+    values (#{aId,jdbcType=INTEGER}, #{aAcount,jdbcType=VARCHAR}, #{aPwd,jdbcType=CHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.taxi.model.po.Admin">
+        insert into admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="aId != null">
+                a_id,
+            </if>
+            <if test="aAcount != null">
+                a_acount,
+            </if>
+            <if test="aPwd != null">
+                a_pwd,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="aId != null">
+                #{aId,jdbcType=INTEGER},
+            </if>
+            <if test="aAcount != null">
+                #{aAcount,jdbcType=VARCHAR},
+            </if>
+            <if test="aPwd != null">
+                #{aPwd,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.taxi.model.po.Admin">
+        update admin
+        <set>
+            <if test="aAcount != null">
+                a_acount = #{aAcount,jdbcType=VARCHAR},
+            </if>
+            <if test="aPwd != null">
+                a_pwd = #{aPwd,jdbcType=CHAR},
+            </if>
+        </set>
+        where a_id = #{aId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.taxi.model.po.Admin">
+    update admin
+    set a_acount = #{aAcount,jdbcType=VARCHAR},
+      a_pwd = #{aPwd,jdbcType=CHAR}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+    <select id="countByAdmin" parameterType="admin" resultType="int">
+    SELECT COUNT(*) FROM admin WHERE a_acount=#{aAcount} AND a_pwd=#{aPwd}
+  </select>
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taxi.mapper.RepairMapper" >
+  <resultMap id="BaseResultMap" type="com.taxi.model.po.Repair" >
+    <id column="r_id" property="rId" jdbcType="INTEGER" />
+    <result column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="r_time" property="rTime" jdbcType="CHAR" />
+    <result column="r_price" property="rPrice" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.taxi.model.po.Repair" extends="BaseResultMap" >
+    <result column="r_content" property="rContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    r_id, c_id, r_time, r_price
+  </sql>
+  <sql id="Blob_Column_List" >
+    r_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from repair
+    where r_id = #{rId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from repair
+    where r_id = #{rId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.taxi.model.po.Repair" >
+    insert into repair (r_id, c_id, r_time, 
+      r_price, r_content)
+    values (#{rId,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{rTime,jdbcType=CHAR}, 
+      #{rPrice,jdbcType=INTEGER}, #{rContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taxi.model.po.Repair" >
+    insert into repair
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rId != null" >
+        r_id,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="rTime != null" >
+        r_time,
+      </if>
+      <if test="rPrice != null" >
+        r_price,
+      </if>
+      <if test="rContent != null" >
+        r_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rId != null" >
+        #{rId,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="rTime != null" >
+        #{rTime,jdbcType=CHAR},
+      </if>
+      <if test="rPrice != null" >
+        #{rPrice,jdbcType=INTEGER},
+      </if>
+      <if test="rContent != null" >
+        #{rContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taxi.model.po.Repair" >
+    update repair
+    <set >
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="rTime != null" >
+        r_time = #{rTime,jdbcType=CHAR},
+      </if>
+      <if test="rPrice != null" >
+        r_price = #{rPrice,jdbcType=INTEGER},
+      </if>
+      <if test="rContent != null" >
+        r_content = #{rContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.taxi.model.po.Repair" >
+    update repair
+    set c_id = #{cId,jdbcType=INTEGER},
+      r_time = #{rTime,jdbcType=CHAR},
+      r_price = #{rPrice,jdbcType=INTEGER},
+      r_content = #{rContent,jdbcType=LONGVARCHAR}
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taxi.model.po.Repair" >
+    update repair
+    set c_id = #{cId,jdbcType=INTEGER},
+      r_time = #{rTime,jdbcType=CHAR},
+      r_price = #{rPrice,jdbcType=INTEGER}
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+</mapper>

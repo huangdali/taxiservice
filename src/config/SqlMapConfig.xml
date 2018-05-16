@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 别名的定义 -->
+    <typeAliases>
+        <!-- 针对单个别名的定义。type：类型的路径； alias：别名 -->
+        <!--<typeAlias type="com.hdl.mybatisdemo.bean.User" alias="User"/>单个定义别名-->
+        <!--批量定义别名 即按包名来定义别名，这样bean目录下的类名就不用一个一个定义了，类名可大小写-->
+        <package name="com.taxi.model.po"/>
+        <package name="com.taxi.model.vo"/>
+    </typeAliases>
+    <!-- mapper这里不需要配置了，因为跟spring整合后，在spring那边会进行mapper的扫描
+       但必须遵循：mapper.xml和mapper.java必须同名且在一个目录
+   -->
+</configuration>

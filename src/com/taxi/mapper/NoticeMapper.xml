@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taxi.mapper.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.taxi.model.po.Notice" >
+    <id column="n_id" property="nId" jdbcType="INTEGER" />
+    <result column="a_id" property="aId" jdbcType="INTEGER" />
+    <result column="n_time" property="nTime" jdbcType="CHAR" />
+    <result column="n_browse" property="nBrowse" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.taxi.model.po.NoticeWithBLOBs" extends="BaseResultMap" >
+    <result column="n_title" property="nTitle" jdbcType="LONGVARCHAR" />
+    <result column="n_content" property="nContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    n_id, a_id, n_time, n_browse
+  </sql>
+  <sql id="Blob_Column_List" >
+    n_title, n_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from notice
+    where n_id = #{nId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notice
+    where n_id = #{nId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.taxi.model.po.NoticeWithBLOBs" >
+    insert into notice (n_id, a_id, n_time, 
+      n_browse, n_title, n_content
+      )
+    values (#{nId,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, #{nTime,jdbcType=CHAR}, 
+      #{nBrowse,jdbcType=INTEGER}, #{nTitle,jdbcType=LONGVARCHAR}, #{nContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.taxi.model.po.NoticeWithBLOBs" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nId != null" >
+        n_id,
+      </if>
+      <if test="aId != null" >
+        a_id,
+      </if>
+      <if test="nTime != null" >
+        n_time,
+      </if>
+      <if test="nBrowse != null" >
+        n_browse,
+      </if>
+      <if test="nTitle != null" >
+        n_title,
+      </if>
+      <if test="nContent != null" >
+        n_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nId != null" >
+        #{nId,jdbcType=INTEGER},
+      </if>
+      <if test="aId != null" >
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="nTime != null" >
+        #{nTime,jdbcType=CHAR},
+      </if>
+      <if test="nBrowse != null" >
+        #{nBrowse,jdbcType=INTEGER},
+      </if>
+      <if test="nTitle != null" >
+        #{nTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="nContent != null" >
+        #{nContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taxi.model.po.NoticeWithBLOBs" >
+    update notice
+    <set >
+      <if test="aId != null" >
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="nTime != null" >
+        n_time = #{nTime,jdbcType=CHAR},
+      </if>
+      <if test="nBrowse != null" >
+        n_browse = #{nBrowse,jdbcType=INTEGER},
+      </if>
+      <if test="nTitle != null" >
+        n_title = #{nTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="nContent != null" >
+        n_content = #{nContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where n_id = #{nId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.taxi.model.po.NoticeWithBLOBs" >
+    update notice
+    set a_id = #{aId,jdbcType=INTEGER},
+      n_time = #{nTime,jdbcType=CHAR},
+      n_browse = #{nBrowse,jdbcType=INTEGER},
+      n_title = #{nTitle,jdbcType=LONGVARCHAR},
+      n_content = #{nContent,jdbcType=LONGVARCHAR}
+    where n_id = #{nId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taxi.model.po.Notice" >
+    update notice
+    set a_id = #{aId,jdbcType=INTEGER},
+      n_time = #{nTime,jdbcType=CHAR},
+      n_browse = #{nBrowse,jdbcType=INTEGER}
+    where n_id = #{nId,jdbcType=INTEGER}
+  </update>
+</mapper>

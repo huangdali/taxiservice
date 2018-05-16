@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taxi.mapper.OrderCarMapper" >
+  <resultMap id="BaseResultMap" type="com.taxi.model.po.OrderCar" >
+    <id column="o_id" property="oId" jdbcType="CHAR" />
+    <result column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="o_create_time" property="oCreateTime" jdbcType="CHAR" />
+    <result column="o_is_finished" property="oIsFinished" jdbcType="BIT" />
+    <result column="o_finished_time" property="oFinishedTime" jdbcType="CHAR" />
+    <result column="o_expected_charge" property="oExpectedCharge" jdbcType="INTEGER" />
+    <result column="o_real_charge" property="oRealCharge" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.taxi.model.po.OrderCar" extends="BaseResultMap" >
+    <result column="o_content" property="oContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    o_id, c_id, o_create_time, o_is_finished, o_finished_time, o_expected_charge, o_real_charge
+  </sql>
+  <sql id="Blob_Column_List" >
+    o_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from order_car
+    where o_id = #{oId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order_car
+    where o_id = #{oId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.taxi.model.po.OrderCar" >
+    insert into order_car (o_id, c_id, o_create_time, 
+      o_is_finished, o_finished_time, o_expected_charge, 
+      o_real_charge, o_content)
+    values (#{oId,jdbcType=CHAR}, #{cId,jdbcType=INTEGER}, #{oCreateTime,jdbcType=CHAR}, 
+      #{oIsFinished,jdbcType=BIT}, #{oFinishedTime,jdbcType=CHAR}, #{oExpectedCharge,jdbcType=INTEGER}, 
+      #{oRealCharge,jdbcType=INTEGER}, #{oContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taxi.model.po.OrderCar" >
+    insert into order_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oId != null" >
+        o_id,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="oCreateTime != null" >
+        o_create_time,
+      </if>
+      <if test="oIsFinished != null" >
+        o_is_finished,
+      </if>
+      <if test="oFinishedTime != null" >
+        o_finished_time,
+      </if>
+      <if test="oExpectedCharge != null" >
+        o_expected_charge,
+      </if>
+      <if test="oRealCharge != null" >
+        o_real_charge,
+      </if>
+      <if test="oContent != null" >
+        o_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oId != null" >
+        #{oId,jdbcType=CHAR},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="oCreateTime != null" >
+        #{oCreateTime,jdbcType=CHAR},
+      </if>
+      <if test="oIsFinished != null" >
+        #{oIsFinished,jdbcType=BIT},
+      </if>
+      <if test="oFinishedTime != null" >
+        #{oFinishedTime,jdbcType=CHAR},
+      </if>
+      <if test="oExpectedCharge != null" >
+        #{oExpectedCharge,jdbcType=INTEGER},
+      </if>
+      <if test="oRealCharge != null" >
+        #{oRealCharge,jdbcType=INTEGER},
+      </if>
+      <if test="oContent != null" >
+        #{oContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taxi.model.po.OrderCar" >
+    update order_car
+    <set >
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="oCreateTime != null" >
+        o_create_time = #{oCreateTime,jdbcType=CHAR},
+      </if>
+      <if test="oIsFinished != null" >
+        o_is_finished = #{oIsFinished,jdbcType=BIT},
+      </if>
+      <if test="oFinishedTime != null" >
+        o_finished_time = #{oFinishedTime,jdbcType=CHAR},
+      </if>
+      <if test="oExpectedCharge != null" >
+        o_expected_charge = #{oExpectedCharge,jdbcType=INTEGER},
+      </if>
+      <if test="oRealCharge != null" >
+        o_real_charge = #{oRealCharge,jdbcType=INTEGER},
+      </if>
+      <if test="oContent != null" >
+        o_content = #{oContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where o_id = #{oId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.taxi.model.po.OrderCar" >
+    update order_car
+    set c_id = #{cId,jdbcType=INTEGER},
+      o_create_time = #{oCreateTime,jdbcType=CHAR},
+      o_is_finished = #{oIsFinished,jdbcType=BIT},
+      o_finished_time = #{oFinishedTime,jdbcType=CHAR},
+      o_expected_charge = #{oExpectedCharge,jdbcType=INTEGER},
+      o_real_charge = #{oRealCharge,jdbcType=INTEGER},
+      o_content = #{oContent,jdbcType=LONGVARCHAR}
+    where o_id = #{oId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taxi.model.po.OrderCar" >
+    update order_car
+    set c_id = #{cId,jdbcType=INTEGER},
+      o_create_time = #{oCreateTime,jdbcType=CHAR},
+      o_is_finished = #{oIsFinished,jdbcType=BIT},
+      o_finished_time = #{oFinishedTime,jdbcType=CHAR},
+      o_expected_charge = #{oExpectedCharge,jdbcType=INTEGER},
+      o_real_charge = #{oRealCharge,jdbcType=INTEGER}
+    where o_id = #{oId,jdbcType=CHAR}
+  </update>
+</mapper>

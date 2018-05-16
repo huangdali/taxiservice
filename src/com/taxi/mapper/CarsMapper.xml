@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taxi.mapper.CarsMapper" >
+  <resultMap id="BaseResultMap" type="com.taxi.model.po.Cars" >
+    <id column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="c_license_plate" property="cLicensePlate" jdbcType="CHAR" />
+    <result column="d_id" property="dId" jdbcType="INTEGER" />
+    <result column="c_name" property="cName" jdbcType="VARCHAR" />
+    <result column="c_buy_time" property="cBuyTime" jdbcType="CHAR" />
+    <result column="c_price" property="cPrice" jdbcType="INTEGER" />
+    <result column="c_is_scrap" property="cIsScrap" jdbcType="BIT" />
+    <result column="c_screp_time" property="cScrepTime" jdbcType="CHAR" />
+    <result column="c_check_time" property="cCheckTime" jdbcType="CHAR" />
+    <result column="c_is_passenger" property="cIsPassenger" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.taxi.model.po.Cars" extends="BaseResultMap" >
+    <result column="c_insurance_info" property="cInsuranceInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    c_id, c_license_plate, d_id, c_name, c_buy_time, c_price, c_is_scrap, c_screp_time, 
+    c_check_time, c_is_passenger
+  </sql>
+  <sql id="Blob_Column_List" >
+    c_insurance_info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cars
+    where c_id = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cars
+    where c_id = #{cId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.taxi.model.po.Cars" >
+    insert into cars (c_id, c_license_plate, d_id, 
+      c_name, c_buy_time, c_price, 
+      c_is_scrap, c_screp_time, c_check_time, 
+      c_is_passenger, c_insurance_info)
+    values (#{cId,jdbcType=INTEGER}, #{cLicensePlate,jdbcType=CHAR}, #{dId,jdbcType=INTEGER}, 
+      #{cName,jdbcType=VARCHAR}, #{cBuyTime,jdbcType=CHAR}, #{cPrice,jdbcType=INTEGER}, 
+      #{cIsScrap,jdbcType=BIT}, #{cScrepTime,jdbcType=CHAR}, #{cCheckTime,jdbcType=CHAR}, 
+      #{cIsPassenger,jdbcType=BIT}, #{cInsuranceInfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taxi.model.po.Cars" >
+    insert into cars
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="cLicensePlate != null" >
+        c_license_plate,
+      </if>
+      <if test="dId != null" >
+        d_id,
+      </if>
+      <if test="cName != null" >
+        c_name,
+      </if>
+      <if test="cBuyTime != null" >
+        c_buy_time,
+      </if>
+      <if test="cPrice != null" >
+        c_price,
+      </if>
+      <if test="cIsScrap != null" >
+        c_is_scrap,
+      </if>
+      <if test="cScrepTime != null" >
+        c_screp_time,
+      </if>
+      <if test="cCheckTime != null" >
+        c_check_time,
+      </if>
+      <if test="cIsPassenger != null" >
+        c_is_passenger,
+      </if>
+      <if test="cInsuranceInfo != null" >
+        c_insurance_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cLicensePlate != null" >
+        #{cLicensePlate,jdbcType=CHAR},
+      </if>
+      <if test="dId != null" >
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="cName != null" >
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cBuyTime != null" >
+        #{cBuyTime,jdbcType=CHAR},
+      </if>
+      <if test="cPrice != null" >
+        #{cPrice,jdbcType=INTEGER},
+      </if>
+      <if test="cIsScrap != null" >
+        #{cIsScrap,jdbcType=BIT},
+      </if>
+      <if test="cScrepTime != null" >
+        #{cScrepTime,jdbcType=CHAR},
+      </if>
+      <if test="cCheckTime != null" >
+        #{cCheckTime,jdbcType=CHAR},
+      </if>
+      <if test="cIsPassenger != null" >
+        #{cIsPassenger,jdbcType=BIT},
+      </if>
+      <if test="cInsuranceInfo != null" >
+        #{cInsuranceInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taxi.model.po.Cars" >
+    update cars
+    <set >
+      <if test="cLicensePlate != null" >
+        c_license_plate = #{cLicensePlate,jdbcType=CHAR},
+      </if>
+      <if test="dId != null" >
+        d_id = #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="cName != null" >
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cBuyTime != null" >
+        c_buy_time = #{cBuyTime,jdbcType=CHAR},
+      </if>
+      <if test="cPrice != null" >
+        c_price = #{cPrice,jdbcType=INTEGER},
+      </if>
+      <if test="cIsScrap != null" >
+        c_is_scrap = #{cIsScrap,jdbcType=BIT},
+      </if>
+      <if test="cScrepTime != null" >
+        c_screp_time = #{cScrepTime,jdbcType=CHAR},
+      </if>
+      <if test="cCheckTime != null" >
+        c_check_time = #{cCheckTime,jdbcType=CHAR},
+      </if>
+      <if test="cIsPassenger != null" >
+        c_is_passenger = #{cIsPassenger,jdbcType=BIT},
+      </if>
+      <if test="cInsuranceInfo != null" >
+        c_insurance_info = #{cInsuranceInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.taxi.model.po.Cars" >
+    update cars
+    set c_license_plate = #{cLicensePlate,jdbcType=CHAR},
+      d_id = #{dId,jdbcType=INTEGER},
+      c_name = #{cName,jdbcType=VARCHAR},
+      c_buy_time = #{cBuyTime,jdbcType=CHAR},
+      c_price = #{cPrice,jdbcType=INTEGER},
+      c_is_scrap = #{cIsScrap,jdbcType=BIT},
+      c_screp_time = #{cScrepTime,jdbcType=CHAR},
+      c_check_time = #{cCheckTime,jdbcType=CHAR},
+      c_is_passenger = #{cIsPassenger,jdbcType=BIT},
+      c_insurance_info = #{cInsuranceInfo,jdbcType=LONGVARCHAR}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taxi.model.po.Cars" >
+    update cars
+    set c_license_plate = #{cLicensePlate,jdbcType=CHAR},
+      d_id = #{dId,jdbcType=INTEGER},
+      c_name = #{cName,jdbcType=VARCHAR},
+      c_buy_time = #{cBuyTime,jdbcType=CHAR},
+      c_price = #{cPrice,jdbcType=INTEGER},
+      c_is_scrap = #{cIsScrap,jdbcType=BIT},
+      c_screp_time = #{cScrepTime,jdbcType=CHAR},
+      c_check_time = #{cCheckTime,jdbcType=CHAR},
+      c_is_passenger = #{cIsPassenger,jdbcType=BIT}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="aspectjweaver-1.8.7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/spring/aspectjweaver-1.8.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/spring/aopalliance-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
